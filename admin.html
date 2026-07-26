@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Adiel · Panel de resultados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FBF6EC;
+    --sage: #7FB69E;
+    --sage-dark: #4F8E76;
+    --sky: #9DC3E6;
+    --sky-dark: #5C8FC0;
+    --ink: #2E3A46;
+    --gold: #E8B347;
+    --card-shadow: 0 10px 30px rgba(46, 58, 70, 0.08);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    font-family: 'Quicksand', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  h1 {
+    font-family: 'Baloo 2', sans-serif;
+    text-align: center;
+    color: var(--sage-dark);
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+  }
+  .sub { text-align: center; color: #8b8474; margin-bottom: 30px; font-weight: 600; }
+
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    border: 2px solid #EAE3D3;
+    box-shadow: var(--card-shadow);
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .card h2 {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 1.15rem;
+    margin-top: 0;
+  }
+
+  label { font-weight: 700; display: block; margin: 12px 0 6px; }
+  input[type="password"], select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 2px solid #EAE3D3;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    background: #FDFBF5;
+  }
+  input:focus, select:focus { outline: none; border-color: var(--sky-dark); }
+
+  button {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    background: var(--sage-dark);
+    border: none;
+    border-radius: 999px;
+    padding: 13px 30px;
+    cursor: pointer;
+    margin-top: 18px;
+    font-size: 1rem;
+  }
+  button.secondary { background: var(--sky-dark); }
+  button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .msg { font-weight: 700; margin-top: 12px; min-height: 20px; }
+  .msg.error { color: #C0473F; }
+  .msg.success { color: var(--sage-dark); }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.92rem; }
+  th, td { padding: 10px 8px; text-align: left; border-bottom: 1px solid #EAE3D3; }
+  th { font-family: 'Baloo 2', sans-serif; color: var(--ink); }
+  tr.winner { background: #FFF6DD; font-weight: 700; }
+  .badge {
+    display: inline-block;
+    background: var(--gold);
+    color: #fff;
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    margin-left: 6px;
+  }
+  .yes { color: var(--sage-dark); font-weight: 700; }
+  .no { color: #b8b0a0; }
+
+  #gate { max-width: 380px; margin: 80px auto 0; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>🧸 Panel de resultados</h1>
+  <p class="sub">Play with Baby Adiel</p>
+
+  <div id="gate">
+    <div class="card">
+      <h2>Acceso privado</h2>
+      <label for="pass">Contraseña de administrador</label>
+      <input type="password" id="pass" placeholder="••••••••">
+      <div class="msg error" id="gateMsg"></div>
+      <button id="enterBtn">Entrar</button>
+    </div>
+  </div>
+
+  <div id="panel" style="display:none;">
+
+    <div class="card">
+      <h2>1. Respuesta real del bebé</h2>
+      <label for="realPiel">Color de piel</label>
+      <select id="realPiel">
+        <option value="">Selecciona...</option>
+        <option value="Piel clara">Piel clara</option>
+        <option value="Tono medio">Tono medio</option>
+        <option value="Morenito hermoso">Morenito hermoso</option>
+      </select>
+
+      <label for="realCabello">Estilo de cabello</label>
+      <select id="realCabello">
+        <option value="">Selecciona...</option>
+        <option value="Con cabello">Con cabello</option>
+        <option value="Sin cabello">Sin cabello</option>
+      </select>
+
+      <label for="realHora">Hora de nacimiento</label>
+      <select id="realHora">
+        <option value="">Selecciona...</option>
+        <option value="00:00 a. m. - 05:59 a. m.">🌙 00:00 a.m. – 05:59 a.m.</option>
+        <option value="06:00 a. m. - 11:59 a. m.">☀️ 06:00 a.m. – 11:59 a.m.</option>
+        <option value="12:00 p. m. - 05:59 p. m.">☀️ 12:00 p.m. – 05:59 p.m.</option>
+        <option value="06:00 p. m. - 11:59 p. m.">🌙 06:00 p.m. – 11:59 p.m.</option>
+      </select>
+
+      <label for="realParto">Tipo de nacimiento</label>
+      <select id="realParto">
+        <option value="">Selecciona...</option>
+        <option value="Por parto">🌸 Por parto</option>
+        <option value="Por cesárea">🩺 Por cesárea</option>
+      </select>
+
+      <label for="realSemana">Semana de nacimiento</label>
+      <select id="realSemana">
+        <option value="">Selecciona...</option>
+        <option value="Semana 35">🌼 Semana 35</option>
+        <option value="Semana 36">🌷 Semana 36</option>
+        <option value="Semana 37">💛 Semana 37</option>
+        <option value="Semana 38">🌸 Semana 38</option>
+        <option value="Semana 39">⭐ Semana 39</option>
+        <option value="Semana 40">🎉 Semana 40</option>
+      </select>
+
+      <button id="saveAnswerBtn">Guardar respuesta y calcular ganador</button>
+      <div class="msg" id="saveMsg"></div>
+    </div>
+
+    <div class="card">
+      <h2>2. Participantes y resultados</h2>
+      <button class="secondary" id="refreshBtn">Actualizar</button>
+      <div class="msg" id="tableMsg"></div>
+      <div id="tableWrap"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // 👉 Pega aquí la misma URL de Apps Script usada en index.html
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNcaXz41nkWgDIjDnGvaLDXNIalsSBHrKd4lt2awIEHmGWMWHvb6xAaSZrz1diGpCCzQ/exec';
+
+  let adminPassword = '';
+
+  const gate = document.getElementById('gate');
+  const panel = document.getElementById('panel');
+  const gateMsg = document.getElementById('gateMsg');
+
+  document.getElementById('enterBtn').addEventListener('click', async () => {
+    const val = document.getElementById('pass').value.trim();
+    if (!val) {
+      gateMsg.textContent = 'Escribe la contraseña.';
+      return;
+    }
+
+    gateMsg.textContent = 'Verificando...';
+    gateMsg.className = 'msg';
+
+    try {
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'verifyAdmin', password: val })
+      });
+      const result = await res.json();
+
+      if (result.success) {
+        adminPassword = val;
+        gate.style.display = 'none';
+        panel.style.display = 'block';
+        loadResults();
+      } else {
+        gateMsg.textContent = 'Contraseña incorrecta.';
+        gateMsg.className = 'msg error';
+      }
+    } catch (err) {
+      gateMsg.textContent = 'No se pudo conectar con el servidor.';
+      gateMsg.className = 'msg error';
+    }
+  });
+
+  document.getElementById('saveAnswerBtn').addEventListener('click', async () => {
+    const saveMsg = document.getElementById('saveMsg');
+    const piel = document.getElementById('realPiel').value;
+    const cabello = document.getElementById('realCabello').value;
+    const hora = document.getElementById('realHora').value;
+    const parto = document.getElementById('realParto').value;
+    const semana = document.getElementById('realSemana').value;
+
+    if (!piel || !cabello || !hora || !parto || !semana) {
+      saveMsg.textContent = 'Selecciona las 5 categorías.';
+      saveMsg.className = 'msg error';
+      return;
+    }
+
+    saveMsg.textContent = 'Guardando...';
+    saveMsg.className = 'msg';
+
+    try {
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'setAnswer', piel, cabello, hora, parto, semana, password: adminPassword })
+      });
+      const result = await res.json();
+
+      if (result.success) {
+        saveMsg.textContent = '¡Respuesta guardada! Calculando ganador...';
+        saveMsg.className = 'msg success';
+        loadResults();
+      } else {
+        saveMsg.textContent = result.error || 'Error al guardar.';
+        saveMsg.className = 'msg error';
+      }
+    } catch (err) {
+      saveMsg.textContent = 'No se pudo conectar con el servidor.';
+      saveMsg.className = 'msg error';
+    }
+  });
+
+  document.getElementById('refreshBtn').addEventListener('click', loadResults);
+
+  async function loadResults() {
+    const tableMsg = document.getElementById('tableMsg');
+    const tableWrap = document.getElementById('tableWrap');
+    tableMsg.textContent = 'Cargando...';
+    tableMsg.className = 'msg';
+
+    try {
+      const res = await fetch(`${APPS_SCRIPT_URL}?action=getWinner`);
+      const result = await res.json();
+
+      if (!result.configured) {
+        tableMsg.textContent = 'Aún no has guardado la respuesta real del bebé arriba.';
+        tableMsg.className = 'msg';
+        tableWrap.innerHTML = '';
+        return;
+      }
+
+      tableMsg.textContent = '';
+      const { resultados } = result;
+
+      if (!resultados.length) {
+        tableWrap.innerHTML = '<p>Todavía no hay participantes registrados.</p>';
+        return;
+      }
+
+      const maxAciertos = resultados[0].aciertos;
+
+      let html = '<table><thead><tr><th>Usuario</th><th>Piel</th><th>Cabello</th><th>Hora</th><th>Parto</th><th>Semana</th><th>Teléfono</th><th>Aciertos</th></tr></thead><tbody>';
+      resultados.forEach(r => {
+        const isWinner = r.aciertos === maxAciertos && maxAciertos > 0;
+        html += `<tr class="${isWinner ? 'winner' : ''}">
+          <td>${escapeHtml(r.usuario)}${isWinner ? '<span class="badge">Ganador</span>' : ''}</td>
+          <td>${escapeHtml(r.piel)}</td>
+          <td>${escapeHtml(r.cabello)}</td>
+          <td>${escapeHtml(r.hora)}</td>
+          <td>${escapeHtml(r.parto || '—')}</td>
+          <td>${escapeHtml(r.semana || '—')}</td>
+          <td>${escapeHtml(r.telefono || '—')}</td>
+          <td>${r.aciertos} / 5</td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      tableWrap.innerHTML = html;
+
+    } catch (err) {
+      tableMsg.textContent = 'No se pudo conectar con el servidor.';
+      tableMsg.className = 'msg error';
+    }
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>"']/g, m => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[m]));
+  }
+</script>
+
+</body>
+</html>
